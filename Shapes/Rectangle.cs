@@ -24,7 +24,7 @@ namespace Shapes
             Height = new Line(point1, point4).ComputeLength();
             Width = new Line(point1, point2).ComputeLength();
             CenterPoint = new Point(point1.X + (Width/2), point1.Y + (Height/2));
-            Validator.ValidateRectangle(point1, point2, point3, point4, $"Attempted to create an invalid shape {this.GetType()}");
+            Validator.ValidateRectangle(Points, $"Attempted to create an invalid shape {this.GetType()}");
         }
 
         public Rectangle(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
@@ -41,7 +41,7 @@ namespace Shapes
             Height = new Line(point1, point2).ComputeLength();
             Width = new Line(point1, point4).ComputeLength();
             CenterPoint = new Point((point1.X + Width)/2, (point1.Y + Height)/2);
-            Validator.ValidateRectangle(point1, point2, point3, point4, $"Attempted to create an invalid shape {this.GetType()}");
+            Validator.ValidateRectangle(Points, $"Attempted to create an invalid shape {this.GetType()}");
         }
 
         public Rectangle(Point point, Size size)
@@ -58,7 +58,7 @@ namespace Shapes
             Height = new Line(point1, point2).ComputeLength();
             Width = new Line(point1, point4).ComputeLength();
             CenterPoint = new Point((point1.X + Width)/2, (point1.Y + Height)/2);
-            Validator.ValidateRectangle(point1, point2, point3, point4, $"Attempted to create an invalid shape {this.GetType()}");
+            Validator.ValidateRectangle(Points, $"Attempted to create an invalid shape {this.GetType()}");
         }
         
         public override double ComputeArea()
