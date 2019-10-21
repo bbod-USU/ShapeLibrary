@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csproj", "{3DEEB67E-89F4-403E-8210-EEBD5A01C64D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temp", "Temp\Temp.csproj", "{781AE2D9-ADBF-4AA4-9D9D-78AFBF04A6F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{E7BB8603-7B34-4C9E-9C1F-916527FD68A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{3DEEB67E-89F4-403E-8210-EEBD5A01C64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DEEB67E-89F4-403E-8210-EEBD5A01C64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DEEB67E-89F4-403E-8210-EEBD5A01C64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{781AE2D9-ADBF-4AA4-9D9D-78AFBF04A6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{781AE2D9-ADBF-4AA4-9D9D-78AFBF04A6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{781AE2D9-ADBF-4AA4-9D9D-78AFBF04A6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{781AE2D9-ADBF-4AA4-9D9D-78AFBF04A6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7BB8603-7B34-4C9E-9C1F-916527FD68A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7BB8603-7B34-4C9E-9C1F-916527FD68A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7BB8603-7B34-4C9E-9C1F-916527FD68A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7BB8603-7B34-4C9E-9C1F-916527FD68A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
