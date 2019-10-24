@@ -23,6 +23,13 @@ namespace Temp
             Console.WriteLine($"({rectangle.Points[0].X}, {rectangle.Points[0].Y}), ({rectangle.Points[1].X}, {rectangle.Points[1].Y}), ({rectangle.Points[2].X}, {rectangle.Points[2].Y}), ({rectangle.Points[3].X}, {rectangle.Points[3].Y}) Height:{rectangle.CalculateHeight()} Width:{rectangle.CalculateWidth()} Center: {rectangle.CenterPoint.X}, {rectangle.CenterPoint.Y}");
             rectangle.Rotate(180);
             Console.WriteLine($"({rectangle.Points[0].X}, {rectangle.Points[0].Y}), ({rectangle.Points[1].X}, {rectangle.Points[1].Y}), ({rectangle.Points[2].X}, {rectangle.Points[2].Y}), ({rectangle.Points[3].X}, {rectangle.Points[3].Y}) Height:{rectangle.CalculateHeight()} Width:{rectangle.CalculateWidth()} Center: {rectangle.CenterPoint.X}, {rectangle.CenterPoint.Y}");
+            
+            
+            
+            var triangle = new Triangle(new Point(3,3), new Point(7,3), new Point(7,6));
+            Console.WriteLine($"({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()} Height: {triangle.Height}");
+            triangle.Rotate(30);
+            Console.WriteLine($"({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()} Height: {triangle.Height}");
 
         }
     }

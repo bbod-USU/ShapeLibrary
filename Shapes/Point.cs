@@ -62,5 +62,27 @@ namespace Shapes
         {
             return new Point(X, Y);
         }
+
+        public static Point operator -(Point point1, Point point2)
+        {
+            var x = point1.X - point2.X;
+            var y = point1.Y - point2.Y;
+            return new Point(x, y);
+        }
+        
+        public static Point operator +(Point point1, Point point2)
+        {
+            var x = point1.X + point2.X;
+            var y = point1.Y + point2.Y;
+            return new Point(x, y);
+        }
+        
+        public static Point operator /(Point point1, double divisor)
+        {
+            var x = point1.X / divisor;
+            var y = point1.Y / divisor;
+            return new Point(x, y);
+        }
+        
     }
 }

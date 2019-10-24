@@ -5,11 +5,9 @@ namespace Shapes
 {
     public class Circle : Shape
     {
-        public Point Center { get; private set; }
+        public override Point CenterPoint { get; }
         public double Radius { get; private set;  }
-
-        public override Color Fill { get; set; }
-        public override  Color Color { get; set; }
+        
         public override double Height { get; }
         public override  double Width { get; }
 
@@ -24,10 +22,8 @@ namespace Shapes
         public Circle(double x, double y, double radius)
         {
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
-            Center = new Point(x, y);
+            CenterPoint = new Point(x, y);
             Radius = radius;
-            Color = Color.Black;
-            Fill = Color.White;
             Height = radius * 2;
             Width = radius * 2;
         }
@@ -44,10 +40,8 @@ namespace Shapes
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
             if (center == null)
                 throw new ShapeException("Invalid center point");
-            Center = center;
+            CenterPoint = center;
             Radius = radius;
-            Color = Color.Black;
-            Fill = Color.White;
             Height = radius * 2;
             Width = radius * 2;
         }
@@ -60,7 +54,7 @@ namespace Shapes
          */
         public void Move(double deltaX, double deltaY)
         {
-            Center.Move(deltaX, deltaY);
+            CenterPoint.Move(deltaX, deltaY);
         }
 
         /**
@@ -84,6 +78,5 @@ namespace Shapes
         {
             return Math.PI * Math.Pow(Radius, 2);
         }
-        
     }
 }

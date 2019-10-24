@@ -6,10 +6,10 @@ namespace Shapes
 {
     public class Rectangle : Shape
     {
-        public override Color Fill { get; set; }
-        public override Color Color { get; set; }
-        public List<Point> Points { get; }
-        public Point CenterPoint { get; }
+        public override List<Point> Points { get; }
+        
+        public List<Line> Lines { get; }
+        public override Point CenterPoint { get; }
         public sealed override double Width { get;  }
         public sealed override double Height { get; }
 
@@ -17,10 +17,19 @@ namespace Shapes
         public Rectangle(Point point1, Point point2, Point point3, Point point4)
         {
             Points = new List<Point>();
+            Lines = new List<Line>();
+            
             Points.Add(point1);
             Points.Add(point2);
             Points.Add(point3);
             Points.Add(point4);
+            
+            Lines.Add(new Line(point1, point2));
+            Lines.Add(new Line(point2, point3));
+            Lines.Add(new Line(point3, point4));
+            Lines.Add(new Line(point4, point1));
+
+
             Height = new Line(point1, point4).ComputeLength();
             Width = new Line(point1, point2).ComputeLength();
             CenterPoint = new Point(point1.X + (Width/2), point1.Y + (Height/2));
@@ -82,27 +91,7 @@ namespace Shapes
             return new Line(Points[0], Points[1]).ComputeLength();
         }
 
-        public void Rotate(double degrees)
-        {
-            double radians = degrees * (Math.PI / 180);
-            double cosTheta = Math.Cos(radians);
-            double sinTheta = Math.Sin(radians);
-            foreach (var point in Points)
-            {
-                var oldPoint = point;
-
-
-                var tempX = oldPoint.X - CenterPoint.X;
-                var tempY = oldPoint.Y - CenterPoint.X;
-
-                var rotatedX = tempX*cosTheta - tempY*sinTheta;
-                var rotatedY = tempX*sinTheta + tempY*cosTheta;
-
-                point.X = rotatedX + CenterPoint.X;
-                point.Y = rotatedY + CenterPoint.Y;
-
-            }
-        }
+        
         
 
     }

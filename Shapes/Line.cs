@@ -7,7 +7,6 @@ namespace Shapes
     {
         public Point Point1 { get; private set; }
         public Point Point2 { get; private set; }
-        public Color Color { get; set; }
 
         /**
          * Constructor based on x-y Locations
@@ -19,7 +18,6 @@ namespace Shapes
          */
         public Line(double x1, double y1, double x2, double y2)
         {
-            Color = Color.Black;
             Point1 = new Point(x1, y1);
             Point2 = new Point(x2, y2);
         }
@@ -34,7 +32,6 @@ namespace Shapes
         {
             if (point1==null || point2==null)
                 throw new ShapeException("Invalid point");
-            Color = Color.Black;
             Point1 = point1;
             Point2 = point2;
         }
@@ -68,5 +65,6 @@ namespace Shapes
         {
             return (Point2.Y - Point1.Y) / (Point2.X - Point1.X);
         }
+        
     }
 }
