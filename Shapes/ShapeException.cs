@@ -1,11 +1,11 @@
+using System;
+
 namespace Shapes
 {
-
-    public class ShapeException : System.Exception
+    public class ShapeException : Exception
     {
         public ShapeException(string message) : base(message)
         {
         }
     }
-
 }

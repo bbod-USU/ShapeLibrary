@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace Shapes
@@ -7,7 +6,7 @@ namespace Shapes
     {
         public T GetShapeFromFile<T>(FileStream fileStream)
         {
-            FileIO fi = new FileIO();
+            var fi = new FileIO();
             return fi.GetShapeFromFile<T>(fileStream);
         }
     }

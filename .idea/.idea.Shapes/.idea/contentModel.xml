@@ -26,7 +26,6 @@
         </e>
         <e p="Point.cs" t="Include" />
         <e p="Rectangle.cs" t="Include" />
-        <e p="rose-blue-flower-rose-blooms-67636.jpg" t="Include" />
         <e p="Shape.cs" t="Include" />
         <e p="ShapeException.cs" t="Include" />
         <e p="ShapeFactory.cs" t="Include" />
@@ -49,6 +48,7 @@
       </e>
       <e p="UnitTests" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="CircleTests.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
@@ -57,7 +57,9 @@
             </e>
           </e>
         </e>
-        <e p="UnitTest1.cs" t="Include" />
+        <e p="RectangleTests.cs" t="Include" />
+        <e p="ShapeFactoryTests.cs" t="Include" />
+        <e p="TriangleTests.cs" t="Include" />
         <e p="UnitTests.csproj" t="IncludeRecursive" />
       </e>
     </e>

@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace Shapes
@@ -12,20 +9,19 @@ namespace Shapes
     [KnownType(typeof(Triangle))]
     public abstract class GeometricShape : Shape
     {
-        [DataMember]
-        public abstract double Width { get; internal set; }
-        [DataMember]
-        public abstract double Height { get; internal set; }
+        [DataMember] public abstract double Width { get; internal set; }
 
-        [DataMember]
-        public abstract Point CenterPoint { get; protected set; }
+        [DataMember] public abstract double Height { get; internal set; }
+
+        [DataMember] public abstract Point CenterPoint { get; protected set; }
+
         internal abstract void ComputeCenter();
-        
+
         public void Rotate(double degrees)
         {
-            double radians = degrees * (Math.PI / 180);
-            double cosTheta = Math.Cos(radians);
-            double sinTheta = Math.Sin(radians);
+            var radians = degrees * (Math.PI / 180);
+            var cosTheta = Math.Cos(radians);
+            var sinTheta = Math.Sin(radians);
             foreach (var point in Points)
             {
                 var oldPoint = point;
@@ -34,15 +30,14 @@ namespace Shapes
                 var tempX = oldPoint.X - CenterPoint.X;
                 var tempY = oldPoint.Y - CenterPoint.X;
 
-                var rotatedX = tempX*cosTheta - tempY*sinTheta;
-                var rotatedY = tempX*sinTheta + tempY*cosTheta;
+                var rotatedX = tempX * cosTheta - tempY * sinTheta;
+                var rotatedY = tempX * sinTheta + tempY * cosTheta;
 
                 point.X = rotatedX + CenterPoint.X;
                 point.Y = rotatedY + CenterPoint.Y;
-
             }
         }
-        
+
         public void Move(double deltaX, double deltaY)
         {
             var tmpCenter = CenterPoint;
@@ -50,7 +45,7 @@ namespace Shapes
             var property = GetType().GetProperties().Equals(nameof(Points));
             Console.WriteLine(property.GetType());
 
-            if(property)
+            if (property)
             {
                 Console.WriteLine(property.GetType());
                 foreach (var point in Points)
@@ -61,6 +56,7 @@ namespace Shapes
                     point.Y = deltaY + tmpPoint.Y;
                 }
             }
+
             CenterPoint = new Point(deltaX, deltaY);
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace Shapes
@@ -7,11 +6,6 @@ namespace Shapes
     [DataContract(Name = "Line", Namespace = "Shapes")]
     public class Line
     {
-        [DataMember]
-        public Point Point1 { get; private set; }
-        [DataMember]
-        public Point Point2 { get; private set; }
-
         /**
          * Constructor based on x-y Locations
          * @param x1                The x-location of first point -- must be a valid double.
@@ -34,11 +28,15 @@ namespace Shapes
          */
         public Line(Point point1, Point point2)
         {
-            if (point1==null || point2==null)
+            if (point1 == null || point2 == null)
                 throw new ShapeException("Invalid point");
             Point1 = point1;
             Point2 = point2;
         }
+
+        [DataMember] public Point Point1 { get; private set; }
+
+        [DataMember] public Point Point2 { get; private set; }
 
         /**
          * Move a line
@@ -69,6 +67,5 @@ namespace Shapes
         {
             return (Point2.Y - Point1.Y) / (Point2.X - Point1.X);
         }
-        
     }
 }

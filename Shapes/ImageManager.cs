@@ -6,7 +6,8 @@ namespace Shapes
 {
     public static class ImageManager
     {
-        private static Hashtable _images;
+        private static readonly Hashtable _images;
+
         static ImageManager()
         {
             _images = new Hashtable();
@@ -18,16 +19,10 @@ namespace Shapes
             {
                 return (Bitmap) _images[stream];
             }
-            else
-            {
-               Bitmap bitmap = new Bitmap(stream);
-               _images.Add(stream, bitmap);
-               return bitmap;
 
-            }
+            var bitmap = new Bitmap(stream);
+            _images.Add(stream, bitmap);
+            return bitmap;
         }
-        
-        
     }
-    
 }

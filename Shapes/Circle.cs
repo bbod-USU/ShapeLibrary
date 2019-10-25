@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -11,23 +9,6 @@ namespace Shapes
     [DataContract]
     public class Circle : GeometricShape
     {
-        internal override void ComputeCenter()
-        {
-            //Does nothing to a circle
-        }
-        [DataMember]
-        public override Color Fill { get; set; }
-        [DataMember]
-        public override Color Stroke { get; set; }
-        [DataMember]
-        public override Point CenterPoint { get; protected set; }
-        [DataMember]
-        public double Radius { get; private set;  }
-        [DataMember]
-        public override double Height { get; internal set; }
-        [DataMember]
-        public override  double Width { get; internal set; }
-
         /**
          * Constructor with x-y Location for center
          *
@@ -53,7 +34,8 @@ namespace Shapes
          * @param radius            The radius of the circle -- must be greater or equal to zero.
          * @throws ShapeException   The exception thrown if the x, y, or z are not valid
          */
-        public Circle(Point center, double radius) {
+        public Circle(Point center, double radius)
+        {
             Stroke = Color.Black;
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
             if (center == null)
@@ -64,7 +46,23 @@ namespace Shapes
             Width = radius * 2;
         }
 
-        
+        [DataMember] public override Color Fill { get; set; }
+
+        [DataMember] public override Color Stroke { get; set; }
+
+        [DataMember] public override Point CenterPoint { get; protected set; }
+
+        [DataMember] public double Radius { get; private set; }
+
+        [DataMember] public override double Height { get; internal set; }
+
+        [DataMember] public override double Width { get; internal set; }
+
+        internal override void ComputeCenter()
+        {
+            //Does nothing to a circle
+        }
+
 
         /**
          * Scale the circle
@@ -83,19 +81,18 @@ namespace Shapes
         public override void Save(Stream stream)
         {
             var fileWriter = new FileIO();
-            fileWriter.SaveShape(stream, this);        
+            fileWriter.SaveShape(stream, this);
         }
 
         public override void Draw(Stream stream)
         {
             var tmp = new Bitmap((int) Radius * 4, (int) Radius * 4);
-            Pen blackPen = new Pen(Color.Bisque, 3);
+            var blackPen = new Pen(Color.Bisque, 3);
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(tmp))
             {
                 graphics.DrawEllipse(blackPen, (float) CenterPoint.X, (float) CenterPoint.Y, (float) Radius * 2,
                     (float) Radius * 2);
-
             }
 
             tmp.Save(stream, ImageFormat.Jpeg);
@@ -108,6 +105,5 @@ namespace Shapes
         {
             return Math.PI * Math.Pow(Radius, 2);
         }
-
     }
 }
