@@ -26,13 +26,13 @@ namespace Shapes
             Lines.Add(new Line(point2, point3));
             Lines.Add(new Line(point3, point1));
 
-            var centerOfLine3 = (point1 - point3) / 2 + point1;
-            var centerTriangle = (point1 - centerOfLine3) / 2 + point1;
+            var centerOfLine1 = (point1 - point2) / 2 + point1;
+            var centerTriangle = (point1 - centerOfLine1) / 2 + point1;
 
 
             CenterPoint = centerTriangle;
 
-            Height = new Line(point1, centerOfLine3).ComputeLength();
+            Height = new Line(point1, point3).ComputeLength();
             Width = new Line(point1, point2).ComputeLength();
         }
 
@@ -58,6 +58,9 @@ namespace Shapes
 
             var centerOfLine3 = (point1 - point3) / 2 + point1;
             var centerTriangle = (point1 - centerOfLine3) / 2 + point1;
+            
+            Height = new Line(point1, point3).ComputeLength();
+            Width = new Line(point1, point2).ComputeLength();
 
             CenterPoint = centerTriangle;
         }
