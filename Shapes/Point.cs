@@ -1,11 +1,16 @@
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
+    [DataContract(Name = "Points", Namespace = "Shapes")]
     public class Point
     {
+        [DataMember]
         public double X { get; internal set; }
+        [DataMember]
         public double Y { get; internal set; }
+        [DataMember]
         public Color Color { get; set; }
 
         public Point(double x, double y)

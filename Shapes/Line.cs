@@ -1,11 +1,15 @@
 using System;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
-       public class Line
+    [DataContract(Name = "Line", Namespace = "Shapes")]
+    public class Line
     {
+        [DataMember]
         public Point Point1 { get; private set; }
+        [DataMember]
         public Point Point2 { get; private set; }
 
         /**

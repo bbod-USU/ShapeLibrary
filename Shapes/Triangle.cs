@@ -2,23 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
-    public class Triangle : Shape
+    [DataContract(Name = "Triangle", Namespace = "Shapes")]
+    public class Triangle : GeometricShape
     {
-        public sealed override List<Point> Points { get; }
-
-        public override double Height { get; }
-
-        public override double Width { get; }
-
-        public sealed override Point CenterPoint { get; }
-        public List<Line> Lines { get; }
+        [DataMember]
+        public sealed override List<Point> Points { get; internal set; }
+        [DataMember]
+        public override Color Fill { get; set; }
+        [DataMember]
+        public override Color Stroke { get; set; }
+        [DataMember]
+        public override double Height { get; internal set; }
+        [DataMember]
+        public override double Width { get; internal set; }
+        [DataMember]
+        public sealed override Point CenterPoint { get; protected set; }
+        [DataMember]
+        public List<Line> Lines { get; internal set; }
 
         public Triangle(Point point1, Point point2, Point point3)
         {
+            Stroke = Color.Black;
+
             Points = new List<Point>();
             Lines = new List<Line>();
             
@@ -44,6 +56,8 @@ namespace Shapes
 
         public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
+            Stroke = Color.Black;
+
             var point1 = new Point(x1, y1);
             var point2 = new Point(x2, y2);
             var point3 = new Point(x3, y3);
@@ -85,6 +99,44 @@ namespace Shapes
                 point.X *= scaleFactor;
                 point.Y *= scaleFactor;
             }
+            foreach (var line in Lines)
+            {
+                line.Point1.X *= scaleFactor;
+                line.Point1.Y *= scaleFactor;
+                line.Point2.X *= scaleFactor;
+                line.Point2.Y *= scaleFactor;
+            }
+        }
+
+        public override void Save(Stream stream)
+        {
+            var fileWriter = new FileIO();
+            fileWriter.SaveShape(stream, this);
+        }
+
+
+        public override void Draw(Stream stream)
+        {
+            var tmp = new Bitmap(1000, 1000);
+            Pen blackPen = new Pen(Stroke, 3);
+            // Draw line to screen.
+            using (var graphics = Graphics.FromImage(tmp))
+            {
+                for (int i = 1; i < Points.Count; i++)
+                    graphics.DrawLine(blackPen, 
+                        (float) Points[i - 1].X, 
+                        (float) Points[i - 1].Y,
+                        (float) Points[i].X,
+                        (float) Points[i].Y);
+            }
+
+            tmp.Save(stream, ImageFormat.Jpeg);        }
+
+        internal override void ComputeCenter()
+        {
+            Point centerOfLine3 = ((Points[0] - Points[2]) / 2) + Points[0];
+            var centerTriangle = ((Points[0] - centerOfLine3) / 2) + Points[0];
+            CenterPoint = centerTriangle;
         }
     }
 }

@@ -1,15 +1,32 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
-    public class Circle : Shape
+    [DataContract]
+    public class Circle : GeometricShape
     {
-        public override Point CenterPoint { get; }
+        internal override void ComputeCenter()
+        {
+            //Does nothing to a circle
+        }
+        [DataMember]
+        public override Color Fill { get; set; }
+        [DataMember]
+        public override Color Stroke { get; set; }
+        [DataMember]
+        public override Point CenterPoint { get; protected set; }
+        [DataMember]
         public double Radius { get; private set;  }
-        
-        public override double Height { get; }
-        public override  double Width { get; }
+        [DataMember]
+        public override double Height { get; internal set; }
+        [DataMember]
+        public override  double Width { get; internal set; }
 
         /**
          * Constructor with x-y Location for center
@@ -21,6 +38,7 @@ namespace Shapes
          */
         public Circle(double x, double y, double radius)
         {
+            Stroke = Color.Black;
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
             CenterPoint = new Point(x, y);
             Radius = radius;
@@ -36,7 +54,7 @@ namespace Shapes
          * @throws ShapeException   The exception thrown if the x, y, or z are not valid
          */
         public Circle(Point center, double radius) {
-        
+            Stroke = Color.Black;
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
             if (center == null)
                 throw new ShapeException("Invalid center point");
@@ -46,16 +64,7 @@ namespace Shapes
             Width = radius * 2;
         }
 
-        /**
-         * Move the circle
-         * @param deltaX            a delta change for the x-location of center of the circle
-         * @param deltaY            a delta change for the y-location of center of the circle
-         * @throws ShapeException   Exception thrown if either the delta x or y are not valid doubles
-         */
-        public void Move(double deltaX, double deltaY)
-        {
-            CenterPoint.Move(deltaX, deltaY);
-        }
+        
 
         /**
          * Scale the circle
@@ -71,6 +80,27 @@ namespace Shapes
             Radius *= scaleFactor;
         }
 
+        public override void Save(Stream stream)
+        {
+            var fileWriter = new FileIO();
+            fileWriter.SaveShape(stream, this);        
+        }
+
+        public override void Draw(Stream stream)
+        {
+            var tmp = new Bitmap((int) Radius * 4, (int) Radius * 4);
+            Pen blackPen = new Pen(Color.Bisque, 3);
+            // Draw line to screen.
+            using (var graphics = Graphics.FromImage(tmp))
+            {
+                graphics.DrawEllipse(blackPen, (float) CenterPoint.X, (float) CenterPoint.Y, (float) Radius * 2,
+                    (float) Radius * 2);
+
+            }
+
+            tmp.Save(stream, ImageFormat.Jpeg);
+        }
+
         /**
          * @return  The area of the circle.
          */
@@ -78,5 +108,6 @@ namespace Shapes
         {
             return Math.PI * Math.Pow(Radius, 2);
         }
+
     }
 }
