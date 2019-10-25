@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization;
@@ -28,6 +29,7 @@ namespace Shapes
         public abstract void Scale(double scaleFactor);
 
         public abstract void Save(Stream stream);
+        [ExcludeFromCodeCoverage]
         public abstract void Draw(Stream stream);
     }
 }

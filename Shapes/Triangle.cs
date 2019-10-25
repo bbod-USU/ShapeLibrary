@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -88,18 +89,12 @@ namespace Shapes
 
         public override void Scale(double scaleFactor)
         {
+            Validator.ValidatePositiveDouble(scaleFactor, "Invalid scale factor");
+
             foreach (var point in Points)
             {
                 point.X *= scaleFactor;
                 point.Y *= scaleFactor;
-            }
-
-            foreach (var line in Lines)
-            {
-                line.Point1.X *= scaleFactor;
-                line.Point1.Y *= scaleFactor;
-                line.Point2.X *= scaleFactor;
-                line.Point2.Y *= scaleFactor;
             }
         }
 
@@ -109,7 +104,7 @@ namespace Shapes
             fileWriter.SaveShape(stream, this);
         }
 
-
+        [ExcludeFromCodeCoverage]
         public override void Draw(Stream stream)
         {
             var tmp = new Bitmap((int) Width * 2, (int) Height * 2);

@@ -40,6 +40,8 @@ namespace Tests
             Assert.AreEqual(rectangle.ComputeArea(), 100);
             Assert.AreEqual(rectangle.CalculateHeight(), 10);
             Assert.AreEqual(rectangle.CalculateWidth(), 10);
+            rectangle.Fill = Color.Aqua;
+            Assert.AreEqual(Color.Aqua, rectangle.Fill);
             foreach (var line in rectangle.Lines)
             {
                 Assert.IsTrue(line.ComputeLength() == 10);
@@ -49,14 +51,12 @@ namespace Tests
         [Test]
         public void BadRectangleWithPoints()
         {
-            Assert.Throws(typeof(ShapeException), delegate
-            {
-                new Rectangle(
-                    new Point(30, 20),
-                    new Point(30, 20),
-                    new Point(30, 30),
-                    new Point(20, 30));
-            }, $"Attempted to create an invalid shape {typeof(Rectangle)}");
+            Assert.That(()=> new Rectangle(
+                new Point(30, 20),
+                new Point(30, 20),
+                new Point(30, 30),
+                new Point(20, 30)), Throws.TypeOf<ShapeException>()
+                .With.Message.EqualTo($"Attempted to create an invalid shape {typeof(Rectangle)}"));
         }
         
         [Test]
@@ -74,6 +74,8 @@ namespace Tests
             Assert.AreEqual(100, rectangle.ComputeArea());
             Assert.AreEqual(10, rectangle.CalculateHeight());
             Assert.AreEqual(10, rectangle.CalculateWidth());
+            rectangle.Fill = Color.Aqua;
+            Assert.AreEqual(Color.Aqua, rectangle.Fill);
             foreach (var line in rectangle.Lines)
             {
                 Assert.IsTrue(line.ComputeLength() == 10);
@@ -97,6 +99,8 @@ namespace Tests
             Assert.AreEqual(100, rectangle.ComputeArea());
             Assert.AreEqual(10, rectangle.CalculateHeight());
             Assert.AreEqual(10, rectangle.CalculateWidth());
+            rectangle.Fill = Color.Aqua;
+            Assert.AreEqual(Color.Aqua, rectangle.Fill);
             foreach (var line in rectangle.Lines)
             {
                 Assert.IsTrue(line.ComputeLength() == 10);
@@ -106,14 +110,12 @@ namespace Tests
         [Test]
         public void BadRectangleWithXY()
         {
-            Assert.Throws(typeof(ShapeException), delegate
-            {
-                new Rectangle(
-                    30, 20,
-                    30, 20,
-                    30, 30,
-                    20, 30);
-            }, $"Attempted to create an invalid shape {typeof(Rectangle)}");
+            Assert.That(()=> new Rectangle(
+                30, 20,
+                30, 20,
+                30, 30,
+                20, 30), Throws.TypeOf<ShapeException>()
+                .With.Message.EqualTo($"Attempted to create an invalid shape {typeof(Rectangle)}"));
         }
 
         [Test]
@@ -173,6 +175,20 @@ namespace Tests
                 Assert.AreEqual(points[i].Y, rectangle.Points[i].Y);
 
             }
+        }
+
+        [Test]
+        public void BadScaleTest()
+        {
+            List<Point> points = new List<Point>();
+
+            var rectangle = new Rectangle(
+                new Point(20, 20),
+                new Point(30, 20),
+                new Point(30, 30),
+                new Point(20, 30));
+            Assert.That(()=> rectangle.Scale(-20), Throws.TypeOf<ShapeException>()
+                .With.Message.EqualTo("Invalid scale factor"));
         }
     }
 

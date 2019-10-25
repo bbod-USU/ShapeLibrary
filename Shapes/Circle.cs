@@ -1,14 +1,20 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
+
+[assembly:InternalsVisibleTo("UnitTests")]
 
 namespace Shapes
 {
     [DataContract]
     public class Circle : GeometricShape
     {
+        internal IFileIO _fileWriter;
+   
         /**
          * Constructor with x-y Location for center
          *
@@ -19,6 +25,7 @@ namespace Shapes
          */
         public Circle(double x, double y, double radius)
         {
+            _fileWriter = new FileIO();
             Stroke = Color.Black;
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
             CenterPoint = new Point(x, y);
@@ -36,10 +43,9 @@ namespace Shapes
          */
         public Circle(Point center, double radius)
         {
+            _fileWriter = new FileIO();
             Stroke = Color.Black;
             Validator.ValidatePositiveDouble(radius, "Invalid radius");
-            if (center == null)
-                throw new ShapeException("Invalid center point");
             CenterPoint = center;
             Radius = radius;
             Height = radius * 2;
@@ -58,6 +64,7 @@ namespace Shapes
 
         [DataMember] public override double Width { get; internal set; }
 
+        [ExcludeFromCodeCoverage]
         internal override void ComputeCenter()
         {
             //Does nothing to a circle
@@ -80,10 +87,10 @@ namespace Shapes
 
         public override void Save(Stream stream)
         {
-            var fileWriter = new FileIO();
-            fileWriter.SaveShape(stream, this);
+            _fileWriter.SaveShape(stream, this);
         }
 
+        [ExcludeFromCodeCoverage]
         public override void Draw(Stream stream)
         {
             var tmp = new Bitmap((int) Radius * 4, (int) Radius * 4);
