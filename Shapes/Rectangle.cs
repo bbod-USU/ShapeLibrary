@@ -3,14 +3,20 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Windows.Input;
+using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("UnitTests")]
 namespace Shapes
 {
     [DataContract]
     public class Rectangle : GeometricShape
     {
+        internal IFileIO _fileWriter;
+
         public Rectangle(Point point1, Point point2, Point point3, Point point4)
         {
+            _fileWriter = new FileIO();
             Stroke = Color.Black;
             Points = new List<Point>();
             Lines = new List<Line>();
@@ -34,8 +40,10 @@ namespace Shapes
 
         public Rectangle(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
         {
+            _fileWriter = new FileIO();
             Stroke = Color.Black;
             Points = new List<Point>();
+            Lines = new List<Line>();
             var point1 = new Point(x1, y1);
             var point2 = new Point(x2, y2);
             var point3 = new Point(x3, y3);
@@ -44,6 +52,12 @@ namespace Shapes
             Points.Add(point2);
             Points.Add(point3);
             Points.Add(point4);
+            
+            Lines.Add(new Line(point1, point2));
+            Lines.Add(new Line(point2, point3));
+            Lines.Add(new Line(point3, point4));
+            Lines.Add(new Line(point4, point1));
+            
             Height = new Line(point1, point2).ComputeLength();
             Width = new Line(point1, point4).ComputeLength();
             ComputeCenter();
@@ -53,8 +67,10 @@ namespace Shapes
         /// <inheritdoc />
         public Rectangle(Point point, Size size)
         {
+            _fileWriter = new FileIO();
             Stroke = Color.Black;
             Points = new List<Point>();
+            Lines = new List<Line>();
             var point1 = point;
             var point2 = new Point(point.X + size.Width, point.Y);
             var point3 = new Point(point.X + size.Width, point.Y + size.Height);
@@ -63,6 +79,12 @@ namespace Shapes
             Points.Add(point2);
             Points.Add(point3);
             Points.Add(point4);
+            
+            Lines.Add(new Line(point1, point2));
+            Lines.Add(new Line(point2, point3));
+            Lines.Add(new Line(point3, point4));
+            Lines.Add(new Line(point4, point1));
+            
             Height = new Line(point1, point2).ComputeLength();
             Width = new Line(point1, point4).ComputeLength();
             ComputeCenter();
@@ -95,20 +117,11 @@ namespace Shapes
                 point.X *= scaleFactor;
                 point.Y *= scaleFactor;
             }
-
-            foreach (var line in Lines)
-            {
-                line.Point1.X *= scaleFactor;
-                line.Point1.Y *= scaleFactor;
-                line.Point2.X *= scaleFactor;
-                line.Point2.Y *= scaleFactor;
-            }
         }
-
+        
         public override void Save(Stream stream)
         {
-            var fileWriter = new FileIO();
-            fileWriter.SaveShape(stream, this);
+            _fileWriter.SaveShape(stream, this);
         }
 
         public override void Draw(Stream stream)
@@ -138,7 +151,6 @@ namespace Shapes
         {
             return new Line(Points[0], Points[1]).ComputeLength();
         }
-
         internal override void ComputeCenter()
         {
             CenterPoint = new Point((Points[0].X + Width) / 2, (Points[0].Y + Height) / 2);

@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Json;
 
 namespace Shapes
 {
-    public class FileIO
+    public class FileIO : IFileIO
     {
         public void SaveShape(Stream stream, Shape shape)
         {

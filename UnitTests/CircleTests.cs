@@ -1,4 +1,6 @@
+using System.Drawing;
 using NUnit.Framework;
+using Shapes;
 
 namespace Tests
 {
@@ -10,9 +12,17 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public void CircleXY()
         {
-            Assert.Pass();
+            var circle = new Circle(10, 10, 1);
+            Assert.AreEqual(10, circle.CenterPoint.X);
+            Assert.AreEqual(10, circle.CenterPoint.Y);
+            Assert.AreEqual(2, circle.Height);            Assert.AreEqual(2, circle.Height);
+            Assert.AreEqual(2, circle.Width);
+            Assert.AreEqual(Color.Empty, circle.Fill);
+            Assert.AreEqual(Color.Black, circle.Stroke);
+            Assert.IsNull(circle.Points);
+            Assert.AreEqual(1, circle.Radius);
         }
     }
 }
