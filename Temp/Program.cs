@@ -36,10 +36,10 @@ namespace Temp
 
             var triangle = new Triangle(new Point(3, 3), new Point(7, 3), new Point(7, 6));
             Console.WriteLine(
-                $"\n \n ({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()} Height: {triangle.Height}");
+                $"\n \n ({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()} ");
             triangle.Rotate(30);
             Console.WriteLine(
-                $"({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()} Height: {triangle.Height}");
+                $"({triangle.Points[0].X}, {triangle.Points[0].Y}) ({triangle.Points[1].X}, {triangle.Points[1].Y}) ({triangle.Points[2].X}, {triangle.Points[2].Y}) Center: ({triangle.CenterPoint.X}, {triangle.CenterPoint.Y})  Area = {triangle.ComputeArea()}");
 
 
             var composite = new CompositeShape();
@@ -59,7 +59,7 @@ namespace Temp
             var fs = new FileStream(@"/Users/bradybodily/Documents/testing/test.txt", FileMode.Open);
             var triangle2 = new ShapeFactory().GetShapeFromFile<Triangle>(fs);
             Console.WriteLine(
-                $"({triangle2.Points[0].X}, {triangle2.Points[0].Y}) ({triangle2.Points[1].X}, {triangle2.Points[1].Y}) ({triangle2.Points[2].X}, {triangle2.Points[2].Y}) Center: ({triangle2.CenterPoint.X}, {triangle2.CenterPoint.Y})  Area = {triangle2.ComputeArea()} Height: {triangle2.Height}");
+                $"({triangle2.Points[0].X}, {triangle2.Points[0].Y}) ({triangle2.Points[1].X}, {triangle2.Points[1].Y}) ({triangle2.Points[2].X}, {triangle2.Points[2].Y}) Center: ({triangle2.CenterPoint.X}, {triangle2.CenterPoint.Y})  Area = {triangle2.ComputeArea()} ");
 
             var imf = new FileStream(@"/Users/bradybodily/Documents/testing/visual-reverse-image-search-v2_intro.jpg",
                 FileMode.Create);

@@ -35,6 +35,7 @@ namespace Tests
             Assert.AreEqual(Color.Aqua, circle.Fill);
             Assert.IsNull(circle.Points);
             Assert.AreEqual(1, circle.Radius);
+            Assert.IsFalse(circle.CompositeShape);
         }
 
 
@@ -53,6 +54,7 @@ namespace Tests
             Assert.AreEqual(Color.Aqua, circle.Fill);
             Assert.IsNull(circle.Points);
             Assert.AreEqual(1, circle.Radius);
+            Assert.IsFalse(circle.CompositeShape);
         }
 
         [Test]

@@ -9,11 +9,8 @@ namespace Shapes
     [KnownType(typeof(Triangle))]
     public abstract class GeometricShape : Shape
     {
-        [DataMember] public abstract double Width { get; internal set; }
-
-        [DataMember] public abstract double Height { get; internal set; }
-
-        [DataMember] public abstract Point CenterPoint { get; protected set; }
+        [DataMember] 
+        public abstract Point CenterPoint { get; protected set; }
 
         internal abstract void ComputeCenter();
 
@@ -42,20 +39,14 @@ namespace Shapes
         {
             var tmpCenter = CenterPoint;
 
-            var property = GetType().GetProperties().Equals(nameof(Points));
-            Console.WriteLine(property.GetType());
-
-            if (property)
-            {
-                Console.WriteLine(property.GetType());
+           
                 foreach (var point in Points)
                 {
                     var tmpPoint = point - tmpCenter;
-                    Console.WriteLine($"({tmpPoint.X}, {tmpPoint.Y})");
                     point.X = deltaX + tmpPoint.X;
                     point.Y = deltaY + tmpPoint.Y;
                 }
-            }
+            
 
             CenterPoint = new Point(deltaX, deltaY);
         }

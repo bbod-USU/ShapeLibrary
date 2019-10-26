@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Shapes
 {
+    [ExcludeFromCodeCoverage]
     public class ShapeFactory
     {
         public T GetShapeFromFile<T>(FileStream fileStream)

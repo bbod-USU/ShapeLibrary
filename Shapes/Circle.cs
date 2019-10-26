@@ -13,6 +13,26 @@ namespace Shapes
     [DataContract]
     public class Circle : GeometricShape
     {
+        
+        
+        [DataMember] 
+        public override Color Fill { get; set; }
+
+        [DataMember] 
+        public override Color Stroke { get; set; }
+
+        [DataMember] 
+        public override Point CenterPoint { get; protected set; }
+
+        [DataMember] 
+        public double Radius { get; private set; }
+
+        [DataMember] 
+        public double Height { get; internal set; }
+
+        [DataMember] 
+        public double Width { get; internal set; }
+        
         internal IFileIO _fileWriter;
    
         /**
@@ -52,17 +72,6 @@ namespace Shapes
             Width = radius * 2;
         }
 
-        [DataMember] public override Color Fill { get; set; }
-
-        [DataMember] public override Color Stroke { get; set; }
-
-        [DataMember] public override Point CenterPoint { get; protected set; }
-
-        [DataMember] public double Radius { get; private set; }
-
-        [DataMember] public override double Height { get; internal set; }
-
-        [DataMember] public override double Width { get; internal set; }
 
         [ExcludeFromCodeCoverage]
         internal override void ComputeCenter()

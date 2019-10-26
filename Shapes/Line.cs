@@ -6,6 +6,10 @@ namespace Shapes
     [DataContract(Name = "Line", Namespace = "Shapes")]
     public class Line
     {
+        [DataMember]
+        public Point Point1 { get; private set; }
+        [DataMember] 
+        public Point Point2 { get; private set; }
         /**
          * Constructor based on x-y Locations
          * @param x1                The x-location of first point -- must be a valid double.
@@ -33,10 +37,6 @@ namespace Shapes
             Point1 = point1;
             Point2 = point2;
         }
-
-        [DataMember] public Point Point1 { get; private set; }
-
-        [DataMember] public Point Point2 { get; private set; }
 
         /**
          * Move a line

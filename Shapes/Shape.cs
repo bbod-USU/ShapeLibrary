@@ -15,14 +15,15 @@ namespace Shapes
             CompositeShape = false;
         }
 
-        [DataMember] public virtual List<Point> Points { get; internal set; }
-
-        [DataMember] public abstract Color Fill { get; set; }
-
-        [DataMember] public abstract Color Stroke { get; set; }
-
-        [DataMember] protected internal bool CompositeShape { get; set; }
-
+        [DataMember] 
+        public virtual List<Point> Points { get; protected set; }
+        [DataMember] 
+        public abstract Color Fill { get; set; }
+        [DataMember] 
+        public abstract Color Stroke { get; set; }
+        [DataMember]
+        protected internal bool CompositeShape { get; set; }
+        
         public abstract double ComputeArea();
 
 

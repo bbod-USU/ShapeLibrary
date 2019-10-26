@@ -34,11 +34,24 @@ namespace Shapes
                 || Math.Abs(lengthLine1.ComputeLength() - lengthLine2.ComputeLength()) > TOLERANCE)
                 throw new ShapeException(errorMessage);
 
+//            while (pointList.Count > 0)
+//            {
+//                var tmp = pointList[0];
+//                pointList.Remove(tmp);
+//                if (pointList.Contains(tmp)) throw new ShapeException(errorMessage);
+//            }
+
             while (pointList.Count > 0)
             {
                 var tmp = pointList[0];
                 pointList.Remove(tmp);
-                if (pointList.Contains(tmp)) throw new ShapeException(errorMessage);
+                foreach (var point in pointList)
+                {
+                    if (point.X.Equals(tmp.X) && point.Y.Equals(tmp.Y))
+                        throw new ShapeException(errorMessage);
+                }
+
+                //if (pointList.Contains(tmp)) throw new ShapeException(errorMessage);
             }
         }
     }

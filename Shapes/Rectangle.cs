@@ -14,6 +14,23 @@ namespace Shapes
     public class Rectangle : GeometricShape
     {
         internal IFileIO _fileWriter;
+        
+        [DataMember]
+         public override List<Point> Points { get; protected set; }
+        [DataMember]
+         public override Color Fill { get; set; }
+        [DataMember]
+         public override Color Stroke { get; set; }
+         [DataMember]
+         public List<Line> Lines { get; }
+         [DataMember]
+         public override Point CenterPoint { get; protected set; }
+         [DataMember]
+         public double Width { get; internal set; }
+         [DataMember]
+         public double Height { get; internal set; }
+
+
 
         public Rectangle(Point point1, Point point2, Point point3, Point point4)
         {
@@ -92,20 +109,7 @@ namespace Shapes
             Validator.ValidateRectangle(Points, $"Attempted to create an invalid shape {GetType()}");
         }
 
-        [DataMember] public override List<Point> Points { get; internal set; }
-
-        [DataMember] public override Color Fill { get; set; }
-
-        [DataMember] public override Color Stroke { get; set; }
-
-        [DataMember] public List<Line> Lines { get; }
-
-        [DataMember] public override Point CenterPoint { get; protected set; }
-
-        [DataMember] public sealed override double Width { get; internal set; }
-
-        [DataMember] public sealed override double Height { get; internal set; }
-
+       
         public override double ComputeArea()
         {
             return Height * Width;

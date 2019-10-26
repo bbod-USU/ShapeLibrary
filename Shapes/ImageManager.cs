@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 
 namespace Shapes
 {
+    [ExcludeFromCodeCoverage]
     public static class ImageManager
     {
         private static readonly Hashtable _images;

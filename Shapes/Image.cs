@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using static Shapes.ImageManager;
 
 namespace Shapes
 {
+    [ExcludeFromCodeCoverage]
     public class Image : Rectangle
     {
         public Image(Point point1, Point point2, Point point3, Point point4, Stream stream) : base(point1, point2,

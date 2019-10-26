@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace Shapes
@@ -11,6 +14,24 @@ namespace Shapes
     [DataContract(Name = "Triangle", Namespace = "Shapes")]
     public class Triangle : GeometricShape
     {
+        
+        [DataMember]
+        public sealed override List<Point> Points { get; protected set; }
+
+        [DataMember]
+        public override Color Fill { get; set; }
+
+        [DataMember]
+        public override Color Stroke { get; set; }
+
+        [DataMember]
+        public sealed override Point CenterPoint { get; protected set; }
+
+        [DataMember]
+        public List<Line> Lines { get; internal set; }
+        
+        internal IFileIO _fileWriter;
+        
         public Triangle(Point point1, Point point2, Point point3)
         {
             Stroke = Color.Black;
@@ -26,14 +47,7 @@ namespace Shapes
             Lines.Add(new Line(point2, point3));
             Lines.Add(new Line(point3, point1));
 
-            var centerOfLine1 = (point1 - point2) / 2 + point1;
-            var centerTriangle = (point1 - centerOfLine1) / 2 + point1;
-
-
-            CenterPoint = centerTriangle;
-
-            Height = new Line(point1, point3).ComputeLength();
-            Width = new Line(point1, point2).ComputeLength();
+            ComputeCenter();
         }
 
         public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
@@ -56,28 +70,10 @@ namespace Shapes
             Lines.Add(new Line(point2, point3));
             Lines.Add(new Line(point3, point1));
 
-            var centerOfLine3 = (point1 - point3) / 2 + point1;
-            var centerTriangle = (point1 - centerOfLine3) / 2 + point1;
-            
-            Height = new Line(point1, point3).ComputeLength();
-            Width = new Line(point1, point2).ComputeLength();
-
-            CenterPoint = centerTriangle;
+            ComputeCenter();
         }
 
-        [DataMember] public sealed override List<Point> Points { get; internal set; }
-
-        [DataMember] public override Color Fill { get; set; }
-
-        [DataMember] public override Color Stroke { get; set; }
-
-        [DataMember] public override double Height { get; internal set; }
-
-        [DataMember] public override double Width { get; internal set; }
-
-        [DataMember] public sealed override Point CenterPoint { get; protected set; }
-
-        [DataMember] public List<Line> Lines { get; internal set; }
+       
 
         public override double ComputeArea()
         {
@@ -103,14 +99,13 @@ namespace Shapes
 
         public override void Save(Stream stream)
         {
-            var fileWriter = new FileIO();
-            fileWriter.SaveShape(stream, this);
+            _fileWriter.SaveShape(stream, this);
         }
 
         [ExcludeFromCodeCoverage]
         public override void Draw(Stream stream)
         {
-            var tmp = new Bitmap((int) Width * 2, (int) Height * 2);
+            var tmp = new Bitmap((int) Lines.Max(x => x.ComputeLength()) * 2, (int) Lines.Max(x => x.ComputeLength()) * 2);
             var blackPen = new Pen(Stroke, 3);
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(tmp))
@@ -128,9 +123,10 @@ namespace Shapes
 
         internal override void ComputeCenter()
         {
-            var centerOfLine3 = (Points[0] - Points[2]) / 2 + Points[0];
-            var centerTriangle = (Points[0] - centerOfLine3) / 2 + Points[0];
-            CenterPoint = centerTriangle;
+            var x = (Points[0].X + Points[1].X + Points[2].X) * 0.33333333333;
+            var y = (Points[0].Y + Points[1].Y + Points[2].Y) * 0.33333333333;
+            CenterPoint = new Point(x, y);
+
         }
     }
 }

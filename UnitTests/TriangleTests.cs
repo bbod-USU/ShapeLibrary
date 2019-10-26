@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Text;
+using Moq;
 using NUnit.Framework;
 using Shapes;
 using Point = Shapes.Point;
@@ -9,10 +12,16 @@ namespace Tests
 {
     public class TriangleTests
     {
+        private Mock<Stream> _mockFileStream;
+        private Mock<IFileIO> _mockFileIO;
+
         [SetUp]
         public void Setup()
         {
+            _mockFileIO = new Mock<IFileIO>();
+            _mockFileStream = new Mock<Stream>();
         }
+
 
         [Test]
         public void TrianglePoints()
@@ -35,8 +44,8 @@ namespace Tests
             Assert.AreEqual(point3, triangle.Lines[1].Point2);
             Assert.AreEqual(point3, triangle.Lines[2].Point1);
             Assert.AreEqual(point1, triangle.Lines[2].Point2);
-            Assert.AreEqual(3, triangle.Height);
-            Assert.AreEqual(3, triangle.Width);
+            Assert.IsFalse(triangle.CompositeShape);
+           
 
         }
 
@@ -78,8 +87,8 @@ namespace Tests
             Assert.AreEqual(point3y, triangle.Lines[1].Point2.Y);
             Assert.AreEqual(point3y, triangle.Lines[2].Point1.Y);
             Assert.AreEqual(point1y, triangle.Lines[2].Point2.Y);
-            Assert.AreEqual(3, triangle.Height);
-            Assert.AreEqual(3, triangle.Width);
+            Assert.IsFalse(triangle.CompositeShape);
+
 
         }
 
@@ -124,10 +133,31 @@ namespace Tests
         {
             var triangle = new Triangle(
                 new Point(0, 0),
-                new Point(1, 0),
-                new Point(0, 1));
-            Assert.AreEqual(.25, triangle.CenterPoint.X);
-            Assert.AreEqual(.5, triangle.CenterPoint.Y);
+                new Point(3, 0),
+                new Point(0, 3));
+            Assert.LessOrEqual(Math.Abs(1 - triangle.CenterPoint.X), 2E-11d);
+            Assert.LessOrEqual(Math.Abs(1 - triangle.CenterPoint.Y), 2E-11d);
+
+        }
+
+        [Test]
+        public void SaveTest()
+        {
+            Shape createdObj = null;
+            var triangle = new Triangle(
+                new Point(0, 0),
+                new Point(3, 0),
+                new Point(0, 3));
+            _mockFileIO.Setup(x => x.SaveShape(It.IsAny<Stream>(), It.IsAny<Shape>()))
+                .Callback<Stream, Shape>((i, x) => { createdObj = x; });
+
+            triangle._fileWriter = _mockFileIO.Object;
+
+            triangle.Save(_mockFileStream.Object);
+            Assert.AreEqual(triangle, createdObj);
+
+            _mockFileIO.Verify(x => x.SaveShape(It.IsAny<Stream>(),
+                It.IsAny<Shape>()), Times.Once);
 
         }
     }

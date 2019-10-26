@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Json;
 
 namespace Shapes
 {
+    [ExcludeFromCodeCoverage]
     public class FileIO : IFileIO
     {
         public void SaveShape(Stream stream, Shape shape)
